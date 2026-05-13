@@ -1,0 +1,20 @@
+server:
+  port: 9001
+spring:
+  application:
+    name: student-service
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/jwts_db?characterEncoding=utf-8&useSSL=false
+    username: root
+    password: EFZER
+    driver-class-name: com.mysql.jdbc.Driver
+
+eureka:
+  instance:
+    prefer-ip-address: true
+
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8888/eureka
