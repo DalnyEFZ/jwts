@@ -8,6 +8,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @EnableDiscoveryClient
 public class TeacherServiceApplication {
 
+    // 启动教师管理微服务
     public static void main(String[] args) {
         SpringApplication.run(TeacherServiceApplication.class, args);
     }

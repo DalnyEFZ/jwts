@@ -13,19 +13,19 @@
     <description>teacher-client</description>
     <dependencies>
 
-        <!--web 妯″潡涓€瀹氳鏀惧湪鍓嶉潰 -->
+        
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!--undertow瀹瑰櫒 -->
+        
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-undertow</artifactId>
         </dependency>
 
-        <!--SpringCloud鏁村悎鐨刼penFeign -->
+        
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>

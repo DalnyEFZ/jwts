@@ -23,7 +23,7 @@ public class TeacherService {
     public Teacher getById(Long id) {
         Teacher teacher = teacherMapper.findById(id);
         if (teacher == null) {
-            throw new IllegalArgumentException("鏁欏笀涓嶅瓨鍦?");
+            throw new IllegalArgumentException("教师不存在");
         }
         return teacher;
     }

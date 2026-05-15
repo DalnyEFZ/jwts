@@ -12,6 +12,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/courses")
+// 课程管理接口：课程维护、选课退课、成绩与成绩单
 public class CourseController {
 
     private final CourseService courseService;
@@ -42,7 +43,7 @@ public class CourseController {
     public ApiResponse<String> deleteCourse(@PathVariable Long id) {
         try {
             courseService.deleteCourse(id);
-            return ApiResponse.ok("delete success");
+            return ApiResponse.ok("删除成功");
         } catch (IllegalArgumentException e) {
             return ApiResponse.fail(e.getMessage());
         }
@@ -66,7 +67,7 @@ public class CourseController {
     public ApiResponse<String> selectCourse(@RequestBody Map<String, Long> body) {
         try {
             courseService.selectCourse(body.get("studentId"), body.get("courseId"));
-            return ApiResponse.ok("select success");
+            return ApiResponse.ok("选课成功");
         } catch (IllegalArgumentException e) {
             return ApiResponse.fail(e.getMessage());
         }
@@ -76,7 +77,7 @@ public class CourseController {
     public ApiResponse<String> dropCourse(@RequestBody Map<String, Long> body) {
         try {
             courseService.dropCourse(body.get("studentId"), body.get("courseId"));
-            return ApiResponse.ok("drop success");
+            return ApiResponse.ok("退课成功");
         } catch (IllegalArgumentException e) {
             return ApiResponse.fail(e.getMessage());
         }
@@ -89,7 +90,7 @@ public class CourseController {
             Long courseId = Long.valueOf(body.get("courseId").toString());
             Double score = Double.valueOf(body.get("score").toString());
             courseService.recordScore(studentId, courseId, score);
-            return ApiResponse.ok("score success");
+            return ApiResponse.ok("成绩录入成功");
         } catch (IllegalArgumentException e) {
             return ApiResponse.fail(e.getMessage());
         }

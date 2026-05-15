@@ -7,13 +7,13 @@ import com.dalnyefz.studentservice.service.StudentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Slf4j
 @RestController
 @RequestMapping("/students")
+// 学生信息管理接口：注册、登录、查询、更新
 public class StudentController {
 
     private final StudentService studentService;
@@ -45,9 +45,11 @@ public class StudentController {
     @GetMapping("/{id}")
     public ApiResponse<Student> get(@PathVariable Long id) throws InterruptedException {
         try {
-            // 测试熔断机制
+            // 用于演示熔断：模拟延迟
+            // 访问http://localhost:9011/student-client/students/1
             Thread.sleep(2000);
-            // 测试负载均衡
+            // 用于演示负载均衡：输出日志
+            // 访问http://localhost:9000/api/students/1?token=1
             log.info("-------------OK /students/{id}--------------------");
             return ApiResponse.ok(studentService.getById(id));
         } catch (IllegalArgumentException e) {

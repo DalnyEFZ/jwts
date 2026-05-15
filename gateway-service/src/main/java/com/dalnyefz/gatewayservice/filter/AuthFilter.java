@@ -16,16 +16,16 @@ import reactor.core.publisher.Mono;
 public class AuthFilter implements GlobalFilter {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        //获取请求参数中的token
+        // 获取请求参数中的token
         String token = exchange.getRequest().getQueryParams().getFirst("token");
         System.out.println(token);
         if(!token.equals("1")){
-            //响应http状态码（401）
+            // 响应http状态码（401）
             exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
-            //请求结束
+            // 请求结束
             return exchange.getResponse().setComplete();
         }
-        //继续执行过滤器链中的下一个资源
+        // 继续执行过滤器链中的下一个资源
         return chain.filter(exchange);
     }
 }

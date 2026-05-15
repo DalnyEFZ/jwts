@@ -26,7 +26,7 @@ public class StudentService {
     public Student login(String studentNo, String password) {
         Student student = studentMapper.findByStudentNo(studentNo);
         if (student == null || !student.getPassword().equals(password)) {
-            throw new IllegalArgumentException("璐﹀彿鎴栧瘑鐮侀敊璇?");
+            throw new IllegalArgumentException("账号或密码错误");
         }
         student.setPassword(null);
         return student;
@@ -35,7 +35,7 @@ public class StudentService {
     public Student getById(Long id) {
         Student student = studentMapper.findById(id);
         if (student == null) {
-            throw new IllegalArgumentException("瀛︾敓涓嶅瓨鍦?");
+            throw new IllegalArgumentException("学生不存在");
         }
         student.setPassword(null);
         return student;
@@ -50,7 +50,7 @@ public class StudentService {
     public Student updateProfile(Long id, Student student) {
         Student exists = studentMapper.findById(id);
         if (exists == null) {
-            throw new IllegalArgumentException("瀛︾敓涓嶅瓨鍦?");
+            throw new IllegalArgumentException("学生不存在");
         }
         student.setId(id);
         studentMapper.updateProfile(student);

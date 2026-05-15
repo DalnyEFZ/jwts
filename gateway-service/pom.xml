@@ -10,15 +10,18 @@
     <artifactId>gateway-service</artifactId>
     <name>gateway-service</name>
     <description>gateway-service</description>
+
     <dependencies>
+        <!-- Spring Cloud Gateway 网关 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-gateway</artifactId>
         </dependency>
-
     </dependencies>
+
     <build>
         <plugins>
+            <!-- Spring Boot 打包插件 -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -26,4 +29,3 @@
         </plugins>
     </build>
 </project>
-

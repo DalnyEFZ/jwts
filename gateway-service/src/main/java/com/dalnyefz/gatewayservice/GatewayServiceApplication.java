@@ -8,6 +8,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @EnableDiscoveryClient
 public class GatewayServiceApplication {
 
+    // 启动网关服务，统一接收外部请求并按路由转发
     public static void main(String[] args) {
         SpringApplication.run(GatewayServiceApplication.class, args);
     }

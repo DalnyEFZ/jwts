@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+// 课程核心业务：课程维护、选退课、成绩录入、成绩单统计
 public class CourseService {
     private final CourseMapper courseMapper;
     private final EnrollmentMapper enrollmentMapper;
@@ -32,6 +33,7 @@ public class CourseService {
     }
 
     public Course addCourse(Course course) {
+        // 新增课程前先校验授课教师是否存在
         validateTeacher(course.getTeacherId());
         courseMapper.insert(course);
         return course;
@@ -53,7 +55,7 @@ public class CourseService {
     public Course getCourse(Long id) {
         Course course = courseMapper.findById(id);
         if (course == null) {
-            throw new IllegalArgumentException("course not found");
+            throw new IllegalArgumentException("课程不存在");
         }
         return course;
     }
@@ -66,10 +68,10 @@ public class CourseService {
         validateStudent(studentId);
         Course course = getCourse(courseId);
         if (courseMapper.enrollmentCount(courseId) >= course.getCapacity()) {
-            throw new IllegalArgumentException("course capacity is full");
+            throw new IllegalArgumentException("课程容量已满");
         }
         if (enrollmentMapper.findByStudentAndCourse(studentId, courseId) != null) {
-            throw new IllegalArgumentException("already selected this course");
+            throw new IllegalArgumentException("该课程已选");
         }
         Enrollment enrollment = new Enrollment();
         enrollment.setStudentId(studentId);
@@ -82,7 +84,7 @@ public class CourseService {
     public void dropCourse(Long studentId, Long courseId) {
         validateStudent(studentId);
         if (enrollmentMapper.deleteByStudentAndCourse(studentId, courseId) <= 0) {
-            throw new IllegalArgumentException("enrollment record not found");
+            throw new IllegalArgumentException("选课记录不存在");
         }
     }
 
@@ -91,7 +93,7 @@ public class CourseService {
         getCourse(courseId);
         Enrollment enrollment = enrollmentMapper.findByStudentAndCourse(studentId, courseId);
         if (enrollment == null) {
-            throw new IllegalArgumentException("enrollment record not found");
+            throw new IllegalArgumentException("选课记录不存在");
         }
         enrollmentMapper.updateScoreAndStatus(studentId, courseId, score, "COMPLETED");
     }
@@ -125,14 +127,14 @@ public class CourseService {
     private void validateStudent(Long studentId) {
         StudentDto student = studentRemoteClient.getStudentById(studentId);
         if (student == null || student.getId() == null) {
-            throw new IllegalArgumentException("student not found");
+            throw new IllegalArgumentException("学生不存在");
         }
     }
 
     private void validateTeacher(Long teacherId) {
         TeacherDto teacher = teacherRemoteClient.getTeacherById(teacherId);
         if (teacher == null || teacher.getId() == null) {
-            throw new IllegalArgumentException("teacher not found");
+            throw new IllegalArgumentException("教师不存在");
         }
     }
 }

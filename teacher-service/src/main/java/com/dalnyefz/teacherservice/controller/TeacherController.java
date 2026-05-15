@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/teachers")
+// 教师信息管理接口：增删改查与内部查询
 public class TeacherController {
 
     private final TeacherService teacherService;
@@ -50,7 +51,7 @@ public class TeacherController {
     public ApiResponse<String> delete(@PathVariable Long id) {
         try {
             teacherService.delete(id);
-            return ApiResponse.ok("鍒犻櫎鎴愬姛");
+            return ApiResponse.ok("删除成功");
         } catch (IllegalArgumentException e) {
             return ApiResponse.fail(e.getMessage());
         }

@@ -11,6 +11,7 @@
     <artifactId>course-service</artifactId>
 
     <dependencies>
+        <!-- 引入学生和教师 client，供课程服务远程校验调用 -->
         <dependency>
             <groupId>com.dalnyefz</groupId>
             <artifactId>student-client</artifactId>
@@ -21,19 +22,20 @@
             <artifactId>teacher-client</artifactId>
             <version>1.0.0</version>
         </dependency>
-        <!--web 妯″潡 -->
+
+        <!-- Web 基础依赖 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!--undertow瀹瑰櫒 -->
+        <!-- 使用 Undertow 作为内嵌容器 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-undertow</artifactId>
         </dependency>
 
-
+        <!-- Config 客户端 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-config</artifactId>
@@ -44,13 +46,13 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
+        <!-- MyBatis 与数据库驱动 -->
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
             <version>1.1.1</version>
         </dependency>
-
-
         <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis</artifactId>
@@ -69,6 +71,7 @@
 
     <build>
         <plugins>
+            <!-- Spring Boot 打包插件 -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -76,5 +79,3 @@
         </plugins>
     </build>
 </project>
-
-

@@ -11,24 +11,25 @@
     <artifactId>eureka-service</artifactId>
 
     <dependencies>
-        <!--SpringCloud eureka-server -->
+        <!-- Eureka 注册中心服务端 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
         </dependency>
 
-        <!--web 妯″潡 -->
+        <!-- Web 基础依赖 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!--undertow瀹瑰櫒 -->
+        <!-- 使用 Undertow 作为内嵌容器 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-undertow</artifactId>
         </dependency>
 
+        <!-- Config 客户端（与指导书依赖体系保持一致） -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-config</artifactId>
@@ -43,6 +44,7 @@
 
     <build>
         <plugins>
+            <!-- Spring Boot 打包插件 -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
