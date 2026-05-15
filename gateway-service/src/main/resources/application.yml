@@ -6,7 +6,24 @@ spring:
   cloud:
     gateway:
       routes:
-
+        - id: student-service-route
+          uri: lb://student-service
+          predicates:
+            - Path=/api/students/**
+          filters:
+            - StripPrefix=1
+        - id: teacher-service-route
+          uri: lb://teacher-service
+          predicates:
+            - Path=/api/teachers/**
+          filters:
+            - StripPrefix=1
+        - id: course-service-route
+          uri: lb://course-service
+          predicates:
+            - Path=/api/courses/**
+          filters:
+            - StripPrefix=1
 
 eureka:
   client:

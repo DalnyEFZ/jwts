@@ -13,19 +13,19 @@
     <description>student-client</description>
     <dependencies>
 
-        <!--web 模块一定要放在前面 -->
+        <!--web 濡€虫健娑撯偓鐎规俺顩﹂弨鎯ф躬閸撳秹娼?-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!--undertow容器 -->
+        <!--undertow鐎圭懓娅?-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-undertow</artifactId>
         </dependency>
 
-        <!--SpringCloud整合的openFeign -->
+        <!--SpringCloud閺佹潙鎮庨惃鍒紁enFeign -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>

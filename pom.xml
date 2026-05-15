@@ -7,7 +7,7 @@
     <groupId>com.dalnyefz</groupId>
     <artifactId>jwts</artifactId>
     <version>1.0.0</version>
-    <!--新增包含的子项目-->
+    <!--閺傛澘顤冮崠鍛儓閻ㄥ嫬鐡欐い鍦窗-->
     <modules>
         <module>eureka-service</module>
         <module>student-service</module>
@@ -16,12 +16,11 @@
         <module>student-client</module>
         <module>teacher-client</module>
         <module>course-client</module>
-<!--        <module>product-client</module>-->
-<!--        <module>gateway-service</module>-->
+        <module>gateway-service</module>
     </modules>
     <name>jwts</name>
     <packaging>pom</packaging>
-    <description>学生课程管理系统</description>
+    <description>鐎涳妇鏁撶拠鍓р柤缁狅紕鎮婄化鑽ょ埠</description>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -33,11 +32,12 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <mybatis.version>2.0.1</mybatis.version>
         <hutool.version>4.5.13</hutool.version>
+        <lombok.version>1.18.32</lombok.version>
     </properties>
-    <!-- 管理依赖 声明依赖 -->
+    <!-- 缁狅紕鎮婃笟婵婄 婢圭増妲戞笟婵婄 -->
     <dependencyManagement>
         <dependencies>
-            <!-- spring Boot 依赖 -->
+            <!-- spring Boot 娓氭繆绂?-->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
@@ -45,7 +45,7 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <!-- spring Cloud 依赖 -->
+            <!-- spring Cloud 娓氭繆绂?-->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
@@ -54,7 +54,7 @@
                 <scope>import</scope>
             </dependency>
 
-            <!-- 统一依赖管理 -->
+            <!-- 缂佺喍绔存笟婵婄缁狅紕鎮?-->
 
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
@@ -65,7 +65,7 @@
             </dependency>
 
 
-            <!--加入hystrix的依赖 -->
+            <!--閸旂姴鍙唄ystrix閻ㄥ嫪绶风挧?-->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
@@ -75,7 +75,7 @@
             </dependency>
 
 
-            <!-- spring cloud config 客户端 -->
+            <!-- spring cloud config 鐎广垺鍩涚粩?-->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-config</artifactId>
@@ -84,13 +84,13 @@
                 <scope>import</scope>
             </dependency>
 
-            <!--spring boot web 模块 -->
+            <!--spring boot web 濡€虫健 -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-web</artifactId>
                 <version>${springboot.version}</version>
                 <exclusions>
-                    <!--排除tomcat依赖 ,使用underom -->
+                    <!--閹烘帡娅巘omcat娓氭繆绂?,娴ｈ法鏁nderom -->
                     <exclusion>
                         <artifactId>spring-boot-starter-tomcat</artifactId>
                         <groupId>org.springframework.boot</groupId>
@@ -100,12 +100,12 @@
         </dependencies>
     </dependencyManagement>
     <dependencies>
-        <!--eureka 客户端 -->
+        <!--eureka 鐎广垺鍩涚粩?-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
-        <!-- feignclient远程调用 -->
+        <!-- feignclient鏉╂粎鈻肩拫鍐暏 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
@@ -115,6 +115,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
         <!-- dependency>
@@ -172,7 +173,7 @@
     </build>
 
     <repositories>
-        <!--阿里云主仓库，代理了maven central和jcenter仓库 -->
+        <!--闂冨潡鍣锋禍鎴滃瘜娴犳挸绨遍敍灞煎敩閻炲棔绨aven central閸滃center娴犳挸绨?-->
         <repository>
             <id>aliyun</id>
             <name>aliyun</name>
@@ -184,7 +185,7 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
-        <!--阿里云代理Spring 官方仓库 -->
+        <!--闂冨潡鍣锋禍鎴滃敩閻炲摖pring 鐎规ɑ鏌熸禒鎾崇氨 -->
         <repository>
             <id>spring-milestones</id>
             <name>Spring Milestones</name>

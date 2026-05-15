@@ -2,12 +2,15 @@ package com.dalnyefz.courseservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
+@EnableDiscoveryClient
+@EnableFeignClients(basePackages = {"com.dalnyefz.studentclient", "com.dalnyefz.teacherclient"})
 public class CourseServiceApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(CourseServiceApplication.class, args);
     }
-
 }
