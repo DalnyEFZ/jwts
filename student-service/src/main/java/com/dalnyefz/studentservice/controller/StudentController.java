@@ -4,12 +4,14 @@ import com.dalnyefz.studentclient.dto.StudentDto;
 import com.dalnyefz.studentservice.common.ApiResponse;
 import com.dalnyefz.studentservice.model.Student;
 import com.dalnyefz.studentservice.service.StudentService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @RestController
 @RequestMapping("/students")
 public class StudentController {
@@ -41,8 +43,12 @@ public class StudentController {
     }
 
     @GetMapping("/{id}")
-    public ApiResponse<Student> get(@PathVariable Long id) {
+    public ApiResponse<Student> get(@PathVariable Long id) throws InterruptedException {
         try {
+            // 测试熔断机制
+            Thread.sleep(2000);
+            // 测试负载均衡
+            log.info("-------------OK /students/{id}--------------------");
             return ApiResponse.ok(studentService.getById(id));
         } catch (IllegalArgumentException e) {
             return ApiResponse.fail(e.getMessage());

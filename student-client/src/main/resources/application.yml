@@ -3,6 +3,9 @@ server:
 spring:
   application:
     name: student-client
+feign:
+  hystrix:
+    enabled: true
 ribbon:
   eureka:
     enable: true
