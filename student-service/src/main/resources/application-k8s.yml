@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: student-service
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/jwts_db?characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: EFZER
+    driver-class-name: com.mysql.jdbc.Driver
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://eureka-service.jwts.svc.cluster.local:8888/eureka
+    instance:
+      prefer-ip-address: true #使用ip地址向eureka server进行注册
+      instance-id: ${spring.cloud.client.ip-address}:${server.port} #设置eureka控制台中显示的注册信息
+      lease-renewal-interval-in-seconds: 5 #续约间隔时间
+      lease-expiration-duration-in-seconds: 15 #续约到期时间

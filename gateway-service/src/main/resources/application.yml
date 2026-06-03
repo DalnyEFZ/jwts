@@ -3,8 +3,14 @@ server:
 spring:
   application:
     name: gateway-service
+  profiles:
+    active: k8s
   cloud:
     gateway:
+      discovery:
+        locator:
+          enabled: true #开启以服务id去注册中心上获取转发地址
+          lower-case-service-id: true #小写serviceId
       routes:
         - id: student-service-route
           uri: lb://student-service
@@ -27,7 +33,11 @@ spring:
 
 eureka:
   client:
-    service-url:
-      defaultZone: http://127.0.0.1:8888/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+  #    service-url:
+#      defaultZone: http://127.0.0.1:8888/eureka/
   instance:
     prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 15
