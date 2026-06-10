@@ -1,5 +1,6 @@
 package com.dalnyefz.teacherclient.api;
 
+import com.dalnyefz.teacherclient.client.TeacherServiceFallback;
 import com.dalnyefz.teacherclient.dto.TeacherDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.Map;
 
-@FeignClient(name = "teacher-service")
+@FeignClient(name = "teacher-service", fallback = TeacherServiceFallback.class)
 public interface TeacherRemoteClient {
     @GetMapping("/teachers/internal/{id}")
     TeacherDto getTeacherById(@PathVariable("id") Long id);

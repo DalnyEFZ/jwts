@@ -1,0 +1,54 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: course-client
+  namespace: jwts
+spec:
+  selector:
+    app: course-client
+  ports:
+    - name: http
+      port: 9013
+      targetPort: 9013
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: course-client
+  namespace: jwts
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: course-client
+  template:
+    metadata:
+      labels:
+        app: course-client
+    spec:
+      containers:
+        - name: course-client
+          image: jwts/course-client:v1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 9013
+          env:
+            - name: JAVA_OPTS
+              value: "-Xms128m -Xmx384m"
+          resources:
+            requests:
+              cpu: 100m
+              memory: 512Mi
+            limits:
+              cpu: "2"
+              memory: 1Gi
+          readinessProbe:
+            tcpSocket:
+              port: 9013
+            initialDelaySeconds: 120
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: 9013
+            initialDelaySeconds: 180
+            periodSeconds: 20

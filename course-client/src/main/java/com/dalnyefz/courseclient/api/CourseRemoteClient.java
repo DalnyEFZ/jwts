@@ -1,12 +1,13 @@
 package com.dalnyefz.courseclient.api;
 
+import com.dalnyefz.courseclient.client.CourseServiceFallback;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.Map;
 
-@FeignClient(name = "course-service")
+@FeignClient(name = "course-service", fallback = CourseServiceFallback.class)
 public interface CourseRemoteClient {
 
     @GetMapping("/courses")

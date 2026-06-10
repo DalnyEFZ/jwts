@@ -1,4 +1,4 @@
 eureka:
   client:
-    service-url:
+    serviceUrl:
       defaultZone: http://eureka-service.jwts.svc.cluster.local:8888/eureka

@@ -18,8 +18,8 @@ public class AuthFilter implements GlobalFilter {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         // 获取请求参数中的token
         String token = exchange.getRequest().getQueryParams().getFirst("token");
-        System.out.println(token);
-        if(!token.equals("1")){
+        System.out.println("token: " + token);
+        if(token == null || !token.equals("1")){
             // 响应http状态码（401）
             exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
             // 请求结束

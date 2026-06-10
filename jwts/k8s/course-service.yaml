@@ -1,0 +1,54 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: course-service
+  namespace: jwts
+spec:
+  selector:
+    app: course-service
+  ports:
+    - name: http
+      port: 9003
+      targetPort: 9003
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: course-service
+  namespace: jwts
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: course-service
+  template:
+    metadata:
+      labels:
+        app: course-service
+    spec:
+      containers:
+        - name: course-service
+          image: jwts/course-service:v1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 9003
+          env:
+            - name: JAVA_OPTS
+              value: "-Xms128m -Xmx384m"
+          resources:
+            requests:
+              cpu: 100m
+              memory: 512Mi
+            limits:
+              cpu: "2"
+              memory: 1Gi
+          readinessProbe:
+            tcpSocket:
+              port: 9003
+            initialDelaySeconds: 120
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: 9003
+            initialDelaySeconds: 180
+            periodSeconds: 20

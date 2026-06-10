@@ -1,0 +1,54 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: student-client
+  namespace: jwts
+spec:
+  selector:
+    app: student-client
+  ports:
+    - name: http
+      port: 9011
+      targetPort: 9011
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: student-client
+  namespace: jwts
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: student-client
+  template:
+    metadata:
+      labels:
+        app: student-client
+    spec:
+      containers:
+        - name: student-client
+          image: jwts/student-client:v1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 9011
+          env:
+            - name: JAVA_OPTS
+              value: "-Xms128m -Xmx384m"
+          resources:
+            requests:
+              cpu: 100m
+              memory: 512Mi
+            limits:
+              cpu: "2"
+              memory: 1Gi
+          readinessProbe:
+            tcpSocket:
+              port: 9011
+            initialDelaySeconds: 120
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: 9011
+            initialDelaySeconds: 180
+            periodSeconds: 20
