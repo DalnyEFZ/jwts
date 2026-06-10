@@ -10,12 +10,12 @@
     
     <modules>
         <module>eureka-service</module>
-        <module>student-service</module>
-        <module>teacher-service</module>
-        <module>course-service</module>
         <module>student-client</module>
         <module>teacher-client</module>
         <module>course-client</module>
+        <module>student-service</module>
+        <module>teacher-service</module>
+        <module>course-service</module>
         <module>gateway-service</module>
     </modules>
     <name>jwts</name>
