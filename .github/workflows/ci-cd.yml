@@ -8,7 +8,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
+  IMAGE_NAME: ${{ github.repository_owner }}/jwts
 
 jobs:
   build-and-push:
@@ -45,6 +45,9 @@ jobs:
           # 定义服务列表
           SERVICES="eureka-service student-service teacher-service course-service student-client teacher-client course-client gateway-service"
 
+          # 将镜像名称转换为小写
+          IMAGE_NAME_LOWER=$(echo "$IMAGE_NAME" | tr '[:upper:]' '[:lower:]')
+
           for SERVICE in $SERVICES; do
             echo "Building $SERVICE..."
 
@@ -52,10 +55,10 @@ jobs:
             cp $SERVICE/target/*.jar jwts/$SERVICE/$SERVICE.jar
 
             # 构建镜像
-            docker build -t $REGISTRY/$IMAGE_NAME/$SERVICE:latest jwts/$SERVICE/
+            docker build -t $REGISTRY/$IMAGE_NAME_LOWER/$SERVICE:latest jwts/$SERVICE/
 
             # 推送镜像
-            docker push $REGISTRY/$IMAGE_NAME/$SERVICE:latest
+            docker push $REGISTRY/$IMAGE_NAME_LOWER/$SERVICE:latest
 
             echo "$SERVICE pushed successfully!"
           done
