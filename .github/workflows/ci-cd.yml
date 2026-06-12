@@ -6,9 +6,17 @@ on:
   pull_request:
     branches: [ "master" ]
 
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
 jobs:
-  build:
+  build-and-push:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
     steps:
       - uses: actions/checkout@v4
 
@@ -24,6 +32,33 @@ jobs:
 
       - name: Run Tests
         run: mvn test
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Docker images
+        run: |
+          # 定义服务列表
+          SERVICES="eureka-service student-service teacher-service course-service student-client teacher-client course-client gateway-service"
+
+          for SERVICE in $SERVICES; do
+            echo "Building $SERVICE..."
+
+            # 复制 jar 文件到构建目录
+            cp $SERVICE/target/*.jar jwts/$SERVICE/$SERVICE.jar
+
+            # 构建镜像
+            docker build -t $REGISTRY/$IMAGE_NAME/$SERVICE:latest jwts/$SERVICE/
+
+            # 推送镜像
+            docker push $REGISTRY/$IMAGE_NAME/$SERVICE:latest
+
+            echo "$SERVICE pushed successfully!"
+          done
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
