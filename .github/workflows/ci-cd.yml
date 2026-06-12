@@ -31,10 +31,10 @@ jobs:
 
           # 设置 JAVA_HOME
           echo "JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64" >> $GITHUB_ENV
-          echo "PATH=$JAVA_HOME/bin:$PATH" >> $GITHUB_ENV
+          echo "/usr/lib/jvm/java-8-openjdk-amd64/bin" >> $GITHUB_PATH
 
           # 验证 Java 版本
-          java -version
+          /usr/lib/jvm/java-8-openjdk-amd64/bin/java -version
 
       - name: Build with Maven
         run: mvn clean package -DskipTests
