@@ -70,11 +70,11 @@ jobs:
             # 复制 jar 文件到 Dockerfile 目录
             cp "$JAR_FILE" "jwts/$SERVICE/$SERVICE.jar"
 
-            # 构建镜像
-            nerdctl build -t $REGISTRY/$IMAGE_NAME_LOWER/$SERVICE:latest jwts/$SERVICE/
+            # 构建镜像（使用 sudo）
+            sudo nerdctl build -t $REGISTRY/$IMAGE_NAME_LOWER/$SERVICE:latest jwts/$SERVICE/
 
-            # 推送镜像
-            nerdctl push $REGISTRY/$IMAGE_NAME_LOWER/$SERVICE:latest
+            # 推送镜像（使用 sudo）
+            sudo nerdctl push $REGISTRY/$IMAGE_NAME_LOWER/$SERVICE:latest
 
             echo "$SERVICE pushed successfully!"
           done
