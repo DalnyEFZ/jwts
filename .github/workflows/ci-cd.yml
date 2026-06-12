@@ -12,7 +12,7 @@ env:
 
 jobs:
   build-and-push:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     permissions:
       contents: read
       packages: write
@@ -65,13 +65,34 @@ jobs:
             cp "$JAR_FILE" "jwts/$SERVICE/$SERVICE.jar"
 
             # 构建镜像
-            docker build -t $REGISTRY/$IMAGE_NAME_LOWER/$SERVICE:latest jwts/$SERVICE/
+            nerdctl build -t $REGISTRY/$IMAGE_NAME_LOWER/$SERVICE:latest jwts/$SERVICE/
 
             # 推送镜像
-            docker push $REGISTRY/$IMAGE_NAME_LOWER/$SERVICE:latest
+            nerdctl push $REGISTRY/$IMAGE_NAME_LOWER/$SERVICE:latest
 
             echo "$SERVICE pushed successfully!"
           done
+
+      - name: Deploy to K8s
+        run: |
+          # 将镜像名称转换为小写
+          IMAGE_NAME_LOWER=$(echo "$IMAGE_NAME" | tr '[:upper:]' '[:lower:]')
+
+          # 更新所有 Deployment
+          SERVICES="eureka-service student-service teacher-service course-service student-client teacher-client course-client gateway-service"
+
+          for SERVICE in $SERVICES; do
+            echo "Updating $SERVICE..."
+            kubectl set image deployment/$SERVICE $SERVICE=$REGISTRY/$IMAGE_NAME_LOWER/$SERVICE:latest -n jwts
+          done
+
+          # 等待更新完成
+          echo "Waiting for rollout to complete..."
+          kubectl rollout status deployment -n jwts --timeout=300s
+
+          # 查看 Pod 状态
+          echo "Current pod status:"
+          kubectl get pods -n jwts
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
