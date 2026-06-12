@@ -84,6 +84,10 @@ jobs:
           # 将镜像名称转换为小写
           IMAGE_NAME_LOWER=$(echo "$IMAGE_NAME" | tr '[:upper:]' '[:lower:]')
 
+          # 复制 kubeconfig 到 github-runner 用户目录
+          sudo cp /root/.kube/config /home/github-runner/.kube/config
+          sudo chown github-runner:github-runner /home/github-runner/.kube/config
+
           # 更新所有 Deployment
           SERVICES="eureka-service student-service teacher-service course-service student-client teacher-client course-client gateway-service"
 
