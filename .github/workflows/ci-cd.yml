@@ -51,8 +51,18 @@ jobs:
           for SERVICE in $SERVICES; do
             echo "Building $SERVICE..."
 
-            # 复制 jar 文件到构建目录
-            cp $SERVICE/target/*.jar jwts/$SERVICE/$SERVICE.jar
+            # 查找 jar 文件
+            JAR_FILE=$(find $SERVICE/target -name "*.jar" -not -name "*-sources.jar" | head -1)
+
+            if [ -z "$JAR_FILE" ]; then
+              echo "ERROR: No jar file found for $SERVICE"
+              exit 1
+            fi
+
+            echo "Found jar: $JAR_FILE"
+
+            # 复制 jar 文件到 Dockerfile 目录
+            cp "$JAR_FILE" "jwts/$SERVICE/$SERVICE.jar"
 
             # 构建镜像
             docker build -t $REGISTRY/$IMAGE_NAME_LOWER/$SERVICE:latest jwts/$SERVICE/
