@@ -91,14 +91,15 @@ jobs:
 
           for SERVICE in $SERVICES; do
             echo "Updating $SERVICE..."
+            kubectl patch deployment/$SERVICE -n jwts \
+              --type merge \
+              -p '{"spec":{"progressDeadlineSeconds":1800}}'
+
             kubectl set image deployment/$SERVICE \
               "$SERVICE=$REGISTRY/$IMAGE_NAME_LOWER/$SERVICE:$IMAGE_TAG" \
               -n jwts
-          done
 
-          echo "Waiting for rollout to complete..."
-          for SERVICE in $SERVICES; do
-            kubectl rollout status deployment/$SERVICE -n jwts --timeout=300s
+            kubectl rollout status deployment/$SERVICE -n jwts --timeout=1800s
           done
 
           kubectl get pods -n jwts -o wide
