@@ -57,8 +57,13 @@ jobs:
           for SERVICE in $SERVICES; do
             echo "Building $SERVICE..."
 
-            # 查找 jar 文件
-            JAR_FILE=$(find $SERVICE/target -name "*.jar" -not -name "*-sources.jar" | head -1)
+            # 查找 jar 文件（优先使用 exec 版本）
+            JAR_FILE=$(find $SERVICE/target -name "*-exec.jar" | head -1)
+
+            # 如果没有 exec 版本，使用普通版本
+            if [ -z "$JAR_FILE" ]; then
+              JAR_FILE=$(find $SERVICE/target -name "*.jar" -not -name "*-sources.jar" | head -1)
+            fi
 
             if [ -z "$JAR_FILE" ]; then
               echo "ERROR: No jar file found for $SERVICE"
